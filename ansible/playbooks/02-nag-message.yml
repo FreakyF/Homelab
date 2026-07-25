@@ -1,0 +1,27 @@
+---
+- name: Proxmox - Remove nag message
+  hosts: proxmox
+  become: true
+
+  tasks:
+    - name: Insert orig_cmd early call
+      ansible.builtin.lineinfile:
+        path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+        insertafter: 'checked_command: function \(orig_cmd\) \{'
+        line: "\t    orig_cmd();"
+        regexp: '^\t    orig_cmd\(\);$'
+      notify: Restart pveproxy
+
+    - name: Insert early return
+      ansible.builtin.lineinfile:
+        path: /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+        insertafter: '^\t    orig_cmd\(\);$'
+        line: "\t    return;"
+        regexp: '^\t    return;$'
+      notify: Restart pveproxy
+
+  handlers:
+    - name: Restart pveproxy
+      ansible.builtin.service:
+        name: pveproxy
+        state: restarted
