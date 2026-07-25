@@ -1,0 +1,6 @@
+# Inventory with credentials
+ansible/inventory/hosts.ini
+
+# Ansible
+*.retry
+.ansible/
