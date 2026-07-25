@@ -1,0 +1,2 @@
+[proxmox]
+hostname ansible_host=SERVER_IP ansible_user=USERNAME ansible_port=22

@@ -1,0 +1,4 @@
+---
+debian_suite: trixie
+proxmox_admin_email: your@email.com
+proxmox_admin_user: your_username
